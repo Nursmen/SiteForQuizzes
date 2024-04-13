@@ -1,0 +1,32 @@
+{% extends 'nursultan/base.html' %}
+
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+    <a href="{% url 'create-test' %}" class="btn btn-lg mt-3">Создать тест</a>
+    {% endif %}
+
+        {% for test in tests %}
+        <div class="card text-bg-danger" style="margin-top: 30px;">
+            <div class="card-header">{{ test.title }} </div>
+            <div class="card-body">
+                <h5 class="card-title"> {{ test.description }}</h5>
+                <p class="card-text"> {{ test.release_date }}</p>
+
+                {% for score in scores %}
+
+                {% if score.user == user and score.test == test %}
+                <br>
+                <p class="card-text">Ваш результат: {{ score.score }}%</p>
+                {% endif %}
+
+                {% endfor %}
+
+                <a href="{% url 'pass-test' test.id %}" class="btn">Сдать</a>
+            </div>
+        </div>
+        {% endfor %}
+
+        <br><br>
+{% endblock %}

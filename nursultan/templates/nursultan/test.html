@@ -1,0 +1,45 @@
+{% extends 'nursultan/base.html' %}
+
+
+{% block content %}
+    <h1 class="text-center test-title">{{ test.title }}</h1>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+    {% for question in questions %}
+    <div class="question mt-3">
+        <h3 class="question-title">{{ question.title }}</h3>
+        
+        <div class="btn-group-vertical w-100" role="group" aria-label="Vertical radio toggle button group">
+            <input type="radio" class="btn-check" name="{{question.title}}" id="vbtn-{{question.id}}-radio1" autocomplete="off" checked value="1">
+            <label class="btn btn-outline-danger" for="vbtn-{{question.id}}-radio1">{{ question.option1 }}</label>
+            <input type="radio" class="btn-check" name="{{question.title}}" id="vbtn-{{question.id}}-radio2" autocomplete="off" value="2">
+            <label class="btn btn-outline-danger" for="vbtn-{{question.id}}-radio2">{{ question.option2 }}</label>
+            {% if question.option3 %}
+            <input type="radio" class="btn-check" name="{{question.title}}" id="vbtn-{{question.id}}-radio3" autocomplete="off" value="3">
+            <label class="btn btn-outline-danger" for="vbtn-{{question.id}}-radio3">{{ question.option3 }}</label>
+            {% endif %}
+            {% if question.option4 %}
+            <input type="radio" class="btn-check" name="{{question.title}}" id="vbtn-{{question.id}}-radio4" autocomplete="off" value="4">
+            <label class="btn btn-outline-danger" for="vbtn-{{question.id}}-radio4">{{ question.option4 }}</label>
+            {% endif %}
+          </div>
+    </div>
+
+    {% endfor %}
+    <button type="submit" class="mb-4 save btn btn-secondary">Отправить</button>
+
+    </form>
+
+    <!-- <form method="post">
+        {% csrf_token %}
+        
+  {{ formset.management_form }}
+        {% for form in formset %}
+          {{ form.as_p }}
+        {% endfor %}
+        <button type="submit">Submit</button>
+      </form> -->
+{% endblock %}

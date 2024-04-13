@@ -1,0 +1,7 @@
+{% extends 'nursultan/base.html' %}
+
+{% block content %}
+    <h1 class="text-center test-title result">Ваш результат: {{ result }}%</h1>
+
+    <a href="{% url 'index' %}" class="btn back d-flex justify-content-center">Назад</a>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'nursultan/base.html' %}
+
+{% block content %}
+<form method="post" id="parent-form">
+    <br><br>
+    {% csrf_token %}
+    {{ parent_form.as_p }}
+    {{ formset.management_form }}
+
+    <br><br>
+
+    {% for form in formset %}
+    <div id="child-forms">
+        <div class="div">
+            {{ form.as_p }}
+        </div>
+    </div>
+        {% endfor %}
+    <div class="btns mb-3">
+
+        <button class="btn btn-primary" type="submit">Сохранить</button>
+        <button class='btn' type="button" id="add-formset">Добавить вопрос</button>
+    </div>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var addButton = document.getElementById('add-formset');
+        addButton.addEventListener('click', function() {
+            var formCount = document.querySelectorAll('#child-forms > div').length;
+            var emptyForm = document.getElementById('empty-formset').innerHTML;
+            var newForm = emptyForm.replace(/__prefix__/g, formCount);
+            var formsContainer = document.getElementById('child-forms');
+            var newFormContainer = document.createElement('div');
+            newFormContainer.innerHTML = newForm;
+            formsContainer.appendChild(newFormContainer);
+        });
+    });
+</script>
+
+<div id="empty-formset" style="display:none;">
+    {{ formset.empty_form.as_p }}
+</div>
+
+<script>
+    // let counter = 1;
+    // var emptyForm = document.getElementById('empty-formset').innerHTML;
+    // var newForm = emptyForm.replace(/__prefix__/g, counter);
+    // let node = document.getElementById('empty-formset');
+    // document.getElementById('add-formset').addEventListener('click', function() {
+    //     console.log(counter);
+    //     counter += 1;
+    //     let clone = node.cloneNode(true);
+    //     console.log(clone.innerHTML);
+    //     clone.style.display = 'block';
+    //     document.getElementById('child-forms').appendChild(clone);
+    // })
+</script>
+
+<!-- Template for empty formset -->
+
+{% endblock %}
